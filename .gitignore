@@ -33,9 +33,7 @@
 
 # IDE files
 Debug/
-_vm/
 *.sln
 *.vcxproj
 *.filters
-
 __vm/
