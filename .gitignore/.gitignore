@@ -32,8 +32,8 @@
 *.app
 
 # IDE files
-/Debug
-/_vm
+Debug/
+_vm/
 *.sln
 *.vcxproj
 *.filters
