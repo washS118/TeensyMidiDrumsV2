@@ -1,0 +1,2 @@
+# TeensyMidiDrums build property overrides
+#

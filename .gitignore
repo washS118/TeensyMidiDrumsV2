@@ -37,3 +37,5 @@ _vm/
 *.sln
 *.vcxproj
 *.filters
+
+__vm/
