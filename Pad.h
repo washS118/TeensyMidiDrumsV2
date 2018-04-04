@@ -27,5 +27,9 @@ private:
 	unsigned int threshold;
 	unsigned int buffer[BUFFER_SIZE];
 	unsigned char bufferIndex;
+	unsigned int smoothingBuffer[SMOOTHING_SIZE];
+	unsigned char smoothingIndex;
 	unsigned int lastHitTime;
+
+	unsigned int getSmoothedVal(int nextVal);
 };

@@ -6,7 +6,11 @@ Pad::Pad(){
 	velocity = 0;
 	threshold = 0;
 	bufferIndex = 0;
+	smoothingIndex = 0;
 	lastHitTime = 0;
+
+	for (int i : buffer) i = 0;
+	for (int i : smoothingBuffer) i = 0;
 }
 
 void Pad::setVals(unsigned char midiNote, unsigned char pin, unsigned int threshold, unsigned int minDelay, unsigned char defaultVelocity){
@@ -30,6 +34,8 @@ Pad Pad::operator=(const Pad& rhs){
 }
 
 void Pad::update(unsigned int nextVal){
+	//nextVal = getSmoothedVal(nextVal);
+
 	if (nextVal < threshold) nextVal = 0;
 
 	buffer[bufferIndex] = nextVal;
@@ -62,4 +68,16 @@ MidiNote Pad::getNote(){
 
 unsigned char Pad::getPin(){
 	return pin;
+}
+
+unsigned int Pad::getSmoothedVal(int nextVal){
+	smoothingBuffer[smoothingIndex] = nextVal;
+	++smoothingIndex;
+	if (smoothingIndex >= SMOOTHING_SIZE) smoothingIndex = 0;
+
+	unsigned int result = 0;
+	for (int i : smoothingBuffer) result += i;
+	result = result / SMOOTHING_SIZE;
+	Serial.println(result);
+	return result;
 }

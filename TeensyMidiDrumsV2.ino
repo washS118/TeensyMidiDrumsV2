@@ -1,4 +1,3 @@
-#include "HatControl.h"
 #include "Pad.h"
 #include <MIDI.h>
 
