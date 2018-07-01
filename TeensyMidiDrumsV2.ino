@@ -1,4 +1,7 @@
+#include <SD_t3.h>
+#include <SD.h>
 #include "Pad.h"
+#include "ProfileReader.h"
 #include <MIDI.h>
 
 Pad pads[BUFFER_SIZE];	// container for all pads
@@ -16,9 +19,11 @@ void setup() {
 	pads[4].setVals(deactivated, A4, 0);
 	pads[5].setVals(hi_hat_closed, A5, 30);
 	pads[6].setVals(ride_bell, A6, 100);
-	pads[7].setVals(crash2, A7, 30, 100);
+	pads[7].setVals(chinese_cymbal, A7, 30, 100);
 	pads[8].setVals(deactivated, A8, 0);
 	pads[9].setVals(deactivated, A9, 0);
+
+	
 }
 
 /*************
@@ -60,7 +65,18 @@ void playMidiNote(MidiNote note) {
 	Serial.println(note.velocity);
 	*/
 
+	/*
+	if (note.velocity > MAX_MIDI_VELOCITY) note.velocity = MAX_MIDI_VELOCITY;
+	if (note.velocity > 0 && note.velocity > note.prevVelocity) {
+		usbMIDI.sendNoteOff(note.note, note.velocity, CHANNEL);
+		usbMIDI.sendNoteOn(note.note, note.velocity, CHANNEL);
+	}
+	else usbMIDI.sendNoteOff(note.note, note.velocity, CHANNEL);
+	*/
+
+	
 	if (note.velocity > MAX_MIDI_VELOCITY) note.velocity = MAX_MIDI_VELOCITY;
 	usbMIDI.sendNoteOn(note.note, note.velocity, CHANNEL);
 	usbMIDI.sendNoteOff(note.note, note.velocity, CHANNEL);
+	
 }

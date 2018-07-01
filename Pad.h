@@ -30,6 +30,9 @@ private:
 	unsigned int smoothingBuffer[SMOOTHING_SIZE];
 	unsigned char smoothingIndex;
 	unsigned int lastHitTime;
+	unsigned int lastVelocity;
 
 	unsigned int getSmoothedVal(int nextVal);
+
+	friend class ProfileReader;
 };

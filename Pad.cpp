@@ -56,12 +56,27 @@ MidiNote Pad::getNote(){
 		if (buffer[i] > result.velocity) result.velocity = buffer[i];
 	}
 
+	/*
+	result.note = note;
+	if (result.velocity >= threshold) {
+		if (USE_MAX) result.velocity = velocity;
+		lastHitTime = millis();
+	}
+	else {
+		result.velocity = 0;
+	}
+	result.prevVelocity = lastVelocity;
+	lastVelocity = result.velocity;
+	*/
+
+	
 	if (result.velocity < threshold) result.note = deactivated;
 	else {
-	  result.note = note;
-    if(USE_MAX) result.velocity = velocity;
-    lastHitTime = millis();
+		result.note = note;
+		if(USE_MAX) result.velocity = velocity;
+		lastHitTime = millis();
 	}
+	
   
 	return result;
 }
