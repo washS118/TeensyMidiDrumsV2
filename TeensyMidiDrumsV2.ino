@@ -2,6 +2,7 @@
 #include <SD.h>
 #include "Pad.h"
 #include "ProfileReader.h"
+#include "Display.h"
 #include <MIDI.h>
 
 Pad pads[BUFFER_SIZE];	// container for all pads
@@ -12,7 +13,7 @@ Pad pads[BUFFER_SIZE];	// container for all pads
 void setup() {
 	pinMode(PEDAL_PIN, INPUT);
 
-	pads[0].setVals(acoustic_bass_drum, A0, 50);
+	pads[0].setVals(acoustic_bass_drum, A0, 51);
 	pads[1].setVals(snare, A1, 50);
 	pads[2].setVals(hi_tom, A2, 50);
 	pads[3].setVals(low_tom, A3, 50);
@@ -23,7 +24,7 @@ void setup() {
 	pads[8].setVals(deactivated, A8, 0);
 	pads[9].setVals(deactivated, A9, 0);
 
-	
+	Display::start(pads);
 }
 
 /*************
@@ -47,9 +48,7 @@ void updatePad(Pad& pad) {
 }
 
 void updateHat() {
-	if (PEDAL_COMMAND != CC_DEACTIVATED) {
-		usbMIDI.sendControlChange(PEDAL_COMMAND, digitalReadFast(PEDAL_PIN), CHANNEL);
-	}
+	
 }
 
 /**************************************
@@ -58,22 +57,6 @@ void updateHat() {
 void playMidiNote(MidiNote note) {
 	//skip if note is zero (deactivated);
 	if (note.note == deactivated) return;
-	
-	/*
-	Serial.print(note.note);
-	Serial.print(":");
-	Serial.println(note.velocity);
-	*/
-
-	/*
-	if (note.velocity > MAX_MIDI_VELOCITY) note.velocity = MAX_MIDI_VELOCITY;
-	if (note.velocity > 0 && note.velocity > note.prevVelocity) {
-		usbMIDI.sendNoteOff(note.note, note.velocity, CHANNEL);
-		usbMIDI.sendNoteOn(note.note, note.velocity, CHANNEL);
-	}
-	else usbMIDI.sendNoteOff(note.note, note.velocity, CHANNEL);
-	*/
-
 	
 	if (note.velocity > MAX_MIDI_VELOCITY) note.velocity = MAX_MIDI_VELOCITY;
 	usbMIDI.sendNoteOn(note.note, note.velocity, CHANNEL);

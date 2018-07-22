@@ -77,12 +77,17 @@ MidiNote Pad::getNote(){
 		lastHitTime = millis();
 	}
 	
-  
+	result.note = note;
 	return result;
 }
 
 unsigned char Pad::getPin(){
 	return pin;
+}
+
+unsigned int Pad::getThresh()
+{
+	return threshold;
 }
 
 unsigned int Pad::getSmoothedVal(int nextVal){

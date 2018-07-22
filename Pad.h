@@ -18,6 +18,7 @@ public:
 	void update(unsigned int nextVal);
 	MidiNote getNote();
 	unsigned char getPin();
+	unsigned int getThresh();
 
 private:
 	unsigned char note;
